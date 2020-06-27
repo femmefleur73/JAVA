@@ -1,0 +1,9 @@
+[전송파라미터]: {
+  "ProductId": "2",
+  "ProductName": "SAMSUNG NOTE",
+  "ProductCost": "1000 $"
+}
+[Dictionary Data]
+Product Id : 2, ProductName :SAMSUNG NOTE, ProductCost :1000 $
+[Product Data Class]
+Product Id : 2, ProductName :SAMSUNG NOTE, ProductCost :1000 $
