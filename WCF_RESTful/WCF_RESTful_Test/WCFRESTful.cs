@@ -28,6 +28,14 @@ namespace WCF_RESTful_Test
 
         private void btnSend_Click(object sender, EventArgs e)
         {
+            //SendString();
+            SendObject();
+            //SendDataTable();
+        }
+
+
+        private void SendString()
+        {
             DataTable dt = new DataTable();
             dt.Columns.Add("ProductId");
             dt.Columns.Add("ProductName");
@@ -42,7 +50,7 @@ namespace WCF_RESTful_Test
                 requestStream.Write(bytes, 0, bytes.Length);
             try
             {
-               
+
 
                 using (HttpWebResponse response = httpWebRequest.GetResponse() as HttpWebResponse)
                 {
@@ -55,17 +63,88 @@ namespace WCF_RESTful_Test
                     DataRow dr = dt.NewRow();
                     foreach (JProperty property in json.Properties())
                     {
-                        
+
                         string Name = property.Name;
                         string Value = property.Value.ToString();
 
                         dr[Name] = Value;
-                       
+
                     }
                     dt.Rows.Add(dr);
                 }
 
                 dtTolistView(dt, listView1);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void SendDataTable()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ProductId");
+            dt.Columns.Add("ProductName");
+            dt.Columns.Add("ProductCost");
+
+            HttpWebRequest httpWebRequest = WebRequest.Create(new Uri(txtURL.Text)) as HttpWebRequest;
+            httpWebRequest.Method = "POST";
+            httpWebRequest.ContentType = "application/json; charset=utf-8";
+            byte[] bytes = Encoding.UTF8.GetBytes(txtPostData.Text);
+            httpWebRequest.ContentLength = (long)bytes.Length;
+            using (Stream requestStream = httpWebRequest.GetRequestStream())
+                requestStream.Write(bytes, 0, bytes.Length);
+            try
+            {
+                using (HttpWebResponse response = httpWebRequest.GetResponse() as HttpWebResponse)
+                {
+                    string sResult = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                    var jsonLinq = JObject.Parse(sResult);
+                    string jLinq = jsonLinq["Product"].ToString();
+                    DataTable myTable = null;
+                    myTable = XMLtoDT(jLinq);
+                    dtTolistView(myTable, listView1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void SendObject()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ProductId");
+            dt.Columns.Add("ProductName");
+            dt.Columns.Add("ProductCost");
+
+            HttpWebRequest httpWebRequest = WebRequest.Create(new Uri(txtURL.Text)) as HttpWebRequest;
+            httpWebRequest.Method = "POST";
+            httpWebRequest.ContentType = "application/json; charset=utf-8";
+            byte[] bytes = Encoding.UTF8.GetBytes(txtPostData.Text);
+            httpWebRequest.ContentLength = (long)bytes.Length;
+            using (Stream requestStream = httpWebRequest.GetRequestStream())
+                requestStream.Write(bytes, 0, bytes.Length);
+            try
+            {
+                using (HttpWebResponse response = httpWebRequest.GetResponse() as HttpWebResponse)
+                {
+                    string sResult = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                    var jsonLinq = JObject.Parse(sResult);
+
+                    string status = jsonLinq["Status"].ToString();
+                    string message = jsonLinq["Message"].ToString();
+                    string jLinq = jsonLinq["Product"].ToString();
+                    txtResult.Text = string.Format("[응답결과] Status :{0}, Message :{1}, Product :{2}\r\n", status, message, jLinq.ToString());
+
+                    DataTable myTable = null;
+                    myTable = XMLtoDT(jLinq);
+                    dtTolistView(myTable, listView1);
+
+                    
+                }
             }
             catch (Exception ex)
             {
@@ -188,5 +267,108 @@ namespace WCF_RESTful_Test
             File.AppendAllText(path + @"\ProductClient.TXT", string.Format("jcon : {0}\r\n", job.ToString()));
             txtPostData.Text = job.ToString();
         }
+
+
+        private string SetDataTable()
+        {
+            DataSet dataSet = new DataSet("dataSet");
+            dataSet.Namespace = "NetFrameWork";
+            DataTable table = new DataTable("Product");
+            DataColumn IdColumn = new DataColumn("ProductId");
+            //IdColumn.AutoIncrement = true;
+
+            DataColumn ProductNameCol = new DataColumn("ProductName");
+            DataColumn ProductCostCol = new DataColumn("ProductCost");
+            table.Columns.Add(IdColumn);
+            table.Columns.Add(ProductNameCol);
+            table.Columns.Add(ProductCostCol);
+
+            dataSet.Tables.Add(table);
+
+            for (int i = 0; i < 5; i++)
+            {
+                DataRow newRow = table.NewRow();
+                newRow["ProductId"] = i.ToString();
+                newRow["ProductName"] = "Kor item" + i;
+                newRow["ProductCost"] = (10000 * i).ToString();
+                table.Rows.Add(newRow);
+            }
+
+            dataSet.AcceptChanges();
+
+            string json = JsonConvert.SerializeObject(dataSet, Formatting.Indented);
+            File.AppendAllText(path + @"\ProductClient.TXT", string.Format("[DataTable json DataTable]\r\n {0}\r\n", json.ToString()));
+            JObject job = new JObject();
+            job.Add("product", json);
+
+            return job.ToString();
+        }
+
+        /// <summary>
+        /// DataTable Test
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnDataSet_Click(object sender, EventArgs e)
+        {
+
+            txtURL.Text = @"http://localhost:12419/ProductService.svc/GetProductDT";
+            txtPostData.Text = SetDataTable();
+        }
+
+        private void btnDataTableLoad_Click(object sender, EventArgs e)
+        {
+            string jsonText = txtResult.Text;
+            var dataSet = JsonConvert.DeserializeObject<DataSet>(jsonText);
+            var table = dataSet.Tables[0];
+            listView1.Clear();
+            SetListView();
+            dtTolistView(table, listView1);
+        }
+
+        public static DataTable Tabulate(string jsonContent)
+        {
+            var jsonLinq = JObject.Parse(jsonContent);
+
+            // Find the first array using Linq
+            var srcArray = jsonLinq.Descendants().Where(d => d is JArray).First();
+            var trgArray = new JArray();
+            foreach (JObject row in srcArray.Children<JObject>())
+            {
+                var cleanRow = new JObject();
+                foreach (JProperty column in row.Properties())
+                {
+                    // Only include JValue types
+                    if (column.Value is JValue)
+                    {
+                        cleanRow.Add(column.Name, column.Value);
+                    }
+                }
+
+                trgArray.Add(cleanRow);
+            }
+
+            return JsonConvert.DeserializeObject<DataTable>(trgArray.ToString());
+        }
+
+        public static DataTable XMLtoDT(string xmlData)
+        {
+            StringReader theReader = new StringReader(xmlData);
+            DataSet theDataSet = new DataSet();
+            theDataSet.ReadXml(theReader);
+
+            return theDataSet.Tables[0];
+        }
+
     }
+
+    public class MyTableUtilClass
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+        public DataTable Product { get; set; }
+    }
+
+
+    
 }

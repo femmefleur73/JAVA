@@ -38,6 +38,8 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.listView1 = new System.Windows.Forms.ListView();
             this.btnJsonInput = new System.Windows.Forms.Button();
+            this.btnDataSet = new System.Windows.Forms.Button();
+            this.btnDataTableLoad = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -92,7 +94,7 @@
             this.btnSend.Location = new System.Drawing.Point(742, 12);
             this.btnSend.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(109, 83);
+            this.btnSend.Size = new System.Drawing.Size(109, 37);
             this.btnSend.TabIndex = 5;
             this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = true;
@@ -128,19 +130,41 @@
             // 
             // btnJsonInput
             // 
-            this.btnJsonInput.Location = new System.Drawing.Point(742, 113);
+            this.btnJsonInput.Location = new System.Drawing.Point(742, 56);
             this.btnJsonInput.Name = "btnJsonInput";
-            this.btnJsonInput.Size = new System.Drawing.Size(109, 83);
+            this.btnJsonInput.Size = new System.Drawing.Size(109, 37);
             this.btnJsonInput.TabIndex = 8;
             this.btnJsonInput.Text = "JSON생성";
             this.btnJsonInput.UseVisualStyleBackColor = true;
             this.btnJsonInput.Click += new System.EventHandler(this.btnJsonInput_Click);
+            // 
+            // btnDataSet
+            // 
+            this.btnDataSet.Location = new System.Drawing.Point(742, 103);
+            this.btnDataSet.Name = "btnDataSet";
+            this.btnDataSet.Size = new System.Drawing.Size(109, 37);
+            this.btnDataSet.TabIndex = 9;
+            this.btnDataSet.Text = "DataSet 생성";
+            this.btnDataSet.UseVisualStyleBackColor = true;
+            this.btnDataSet.Click += new System.EventHandler(this.btnDataSet_Click);
+            // 
+            // btnDataTableLoad
+            // 
+            this.btnDataTableLoad.Location = new System.Drawing.Point(742, 146);
+            this.btnDataTableLoad.Name = "btnDataTableLoad";
+            this.btnDataTableLoad.Size = new System.Drawing.Size(109, 37);
+            this.btnDataTableLoad.TabIndex = 10;
+            this.btnDataTableLoad.Text = "DataSet 로드";
+            this.btnDataTableLoad.UseVisualStyleBackColor = true;
+            this.btnDataTableLoad.Click += new System.EventHandler(this.btnDataTableLoad_Click);
             // 
             // frmWCFRESTful
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(869, 694);
+            this.Controls.Add(this.btnDataTableLoad);
+            this.Controls.Add(this.btnDataSet);
             this.Controls.Add(this.btnJsonInput);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.statusStrip1);
@@ -173,6 +197,8 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button btnJsonInput;
+        private System.Windows.Forms.Button btnDataSet;
+        private System.Windows.Forms.Button btnDataTableLoad;
     }
 }
 

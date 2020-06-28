@@ -1,9 +1,41 @@
-[전송파라미터]: {
-  "ProductId": "2",
-  "ProductName": "SAMSUNG NOTE",
-  "ProductCost": "1000 $"
+[GetProductDT::전송파라미터]: {
+  "Product": [
+    {
+      "ProductId": "0",
+      "ProductName": "Kor item0",
+      "ProductCost": "0"
+    },
+    {
+      "ProductId": "1",
+      "ProductName": "Kor item1",
+      "ProductCost": "10000"
+    },
+    {
+      "ProductId": "2",
+      "ProductName": "Kor item2",
+      "ProductCost": "20000"
+    },
+    {
+      "ProductId": "3",
+      "ProductName": "Kor item3",
+      "ProductCost": "30000"
+    },
+    {
+      "ProductId": "4",
+      "ProductName": "Kor item4",
+      "ProductCost": "40000"
+    }
+  ]
 }
-[Dictionary Data]
-Product Id : 2, ProductName :SAMSUNG NOTE, ProductCost :1000 $
-[Product Data Class]
-Product Id : 2, ProductName :SAMSUNG NOTE, ProductCost :1000 $
+[DataTable In Data]
+Product Id : 0, ProductName :Kor item0, ProductCost :0
+[DataTable In Data]
+Product Id : 1, ProductName :Kor item1, ProductCost :10000
+[DataTable In Data]
+Product Id : 2, ProductName :Kor item2, ProductCost :20000
+[DataTable In Data]
+Product Id : 3, ProductName :Kor item3, ProductCost :30000
+[DataTable In Data]
+Product Id : 4, ProductName :Kor item4, ProductCost :40000
+[Product Out Data]
+Product Id : System.Data.DataRow, ProductName :System.Data.DataRow, ProductCost :System.Data.DataRow

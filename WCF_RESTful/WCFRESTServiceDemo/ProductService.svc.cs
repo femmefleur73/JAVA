@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
@@ -49,6 +50,53 @@ namespace WCFRESTServiceDemo
             File.AppendAllText(path + @"\Product.TXT", string.Format("[Product Data Class]\r\nProduct Id : {0}, ProductName :{1}, ProductCost :{2}\r\n", objProduct.ProductId, objProduct.ProductName, objProduct.ProductCost));
 
             return objProduct;
+        }
+
+        /// <summary>
+        /// DataTable Data 처리 테스트
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        public MyTableUtilClass GetProductDT(string product)
+        {
+            //DataSet ds = new DataSet();
+            DataTable dtOut = new DataTable();
+
+            File.WriteAllText(path + @"\Product.TXT", string.Format("[GetProductDT::전송파라미터]: {0}\r\n", product));
+
+            DataSet dataSet = JsonConvert.DeserializeObject<DataSet>(product);
+            DataTable pdDT = dataSet.Tables["Product"];
+
+            Product objProduct = new Product();
+            foreach (DataRow dr in pdDT.Rows)
+            {
+                objProduct.ProductId = dr["ProductId"].ToString();
+                objProduct.ProductName = dr["ProductName"].ToString();
+                objProduct.ProductCost = dr["ProductCost"].ToString();
+
+                File.AppendAllText(path + @"\Product.TXT", string.Format("[DataTable In Data]\r\nProduct Id : {0}, ProductName :{1}, ProductCost :{2}\r\n", dr["ProductId"], dr["ProductName"], dr["ProductCost"]));
+            }
+
+            dtOut = pdDT.Clone();
+            for (int i = 0; i < 10; i++)
+            {
+                DataRow newRow = dtOut.NewRow();
+                newRow["ProductId"] = i.ToString();
+                newRow["ProductName"] = "SAM item" + i;
+                newRow["ProductCost"] = (20000 * i).ToString();
+                dtOut.Rows.Add(newRow);
+            }
+
+            File.AppendAllText(path + @"\Product.TXT", string.Format("[Product Out Data]\r\nProduct Id : {0}, ProductName :{1}, ProductCost :{2}\r\n", dtOut.Rows[0].ToString(), dtOut.Rows[1].ToString(), dtOut.Rows[2].ToString()));
+
+            //ds.Tables.Add(dtOut);
+
+            MyTableUtilClass pd = new MyTableUtilClass();
+            pd.Status = "S";
+            pd.Message = "성공";
+            pd.Product = dtOut;
+
+            return pd;
         }
     }
 }
