@@ -13,3 +13,5 @@ G:\Github\WCF_RESTful\WCFRESTServiceDemo\obj\Debug\WCFRESTServiceDemo.pdb
 G:\Github\WCF_RESTful\WCFRESTServiceDemo\bin\Newtonsoft.Json.dll
 G:\Github\WCF_RESTful\WCFRESTServiceDemo\bin\Newtonsoft.Json.xml
 G:\Github\WCF_RESTful\WCFRESTServiceDemo\obj\Debug\WCFRESTServiceDemo.csproj.CopyComplete
+G:\Github\WCF_RESTful\WCFRESTServiceDemo\bin\Oracle.DataAccess.dll
+G:\Github\WCF_RESTful\WCFRESTServiceDemo\obj\Debug\WCFRESTServiceDemo.csprojAssemblyReference.cache

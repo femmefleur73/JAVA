@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.OleDb;
+using System.Data.OracleClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -11,6 +13,8 @@ using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
+//using Oracle.DataAccess.Client;
 
 namespace WCF_RESTful_Test
 {
@@ -21,6 +25,12 @@ namespace WCF_RESTful_Test
         private static string sInput = @"{""product"" : ""{\""ProductCost\"":\""1000 $\"",\""ProductId\"":\""1\"",\""ProductName\"":\""Laptop\""}""}";
         private static string path = AppDomain.CurrentDomain.BaseDirectory;
 
+        private static readonly string m_User = "ORAUSER";
+        private static readonly string m_Password = "1qazxsw2";
+        private static readonly string m_Host = "localhost";
+        private static readonly string m_DataSource = "ORCL";
+        
+
         public frmWCFRESTful()
         {
             InitializeComponent();
@@ -29,8 +39,17 @@ namespace WCF_RESTful_Test
         private void btnSend_Click(object sender, EventArgs e)
         {
             //SendString();
-            SendObject();
+            //SendObject();
             //SendDataTable();
+            //SendOracle();
+
+
+            //SelectEMP("7499");
+
+            //TestOracleConnection();
+
+            DataTable dt = ConvertDataTabletoString("7499");
+            dtTolistView(dt, listView1);
         }
 
 
@@ -40,6 +59,9 @@ namespace WCF_RESTful_Test
             dt.Columns.Add("ProductId");
             dt.Columns.Add("ProductName");
             dt.Columns.Add("ProductCost");
+
+            txtURL.Text = @"http://localhost:12419/ProductService.svc/GetProduct";
+            txtPostData.Text = sInput;
 
             HttpWebRequest httpWebRequest = WebRequest.Create(new Uri(txtURL.Text)) as HttpWebRequest;
             httpWebRequest.Method = "POST";
@@ -88,6 +110,9 @@ namespace WCF_RESTful_Test
             dt.Columns.Add("ProductName");
             dt.Columns.Add("ProductCost");
 
+            txtURL.Text = @"http://localhost:12419/ProductService.svc/GetProductDT";
+            txtPostData.Text = SetDataTable();
+
             HttpWebRequest httpWebRequest = WebRequest.Create(new Uri(txtURL.Text)) as HttpWebRequest;
             httpWebRequest.Method = "POST";
             httpWebRequest.ContentType = "application/json; charset=utf-8";
@@ -100,11 +125,44 @@ namespace WCF_RESTful_Test
                 using (HttpWebResponse response = httpWebRequest.GetResponse() as HttpWebResponse)
                 {
                     string sResult = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                    var jsonLinq = JObject.Parse(sResult);
-                    string jLinq = jsonLinq["Product"].ToString();
-                    DataTable myTable = null;
-                    myTable = XMLtoDT(jLinq);
-                    dtTolistView(myTable, listView1);
+                    JObject jobj = JObject.Parse(sResult);
+
+                    DataTable dataTable = jobj.ToObject<DataTable>();
+                    dtTolistView(dataTable, listView1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void SendOracle()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ProductId");
+            dt.Columns.Add("ProductName");
+            dt.Columns.Add("ProductCost");
+
+            txtURL.Text = @"http://localhost:12419/ProductService.svc/GetProductORA";
+            txtPostData.Text = @"{""empno"" : ""7499""}";
+
+            HttpWebRequest httpWebRequest = WebRequest.Create(new Uri(txtURL.Text)) as HttpWebRequest;
+            httpWebRequest.Method = "POST";
+            httpWebRequest.ContentType = "application/json; charset=utf-8";
+            byte[] bytes = Encoding.UTF8.GetBytes(txtPostData.Text);
+            httpWebRequest.ContentLength = (long)bytes.Length;
+            using (Stream requestStream = httpWebRequest.GetRequestStream())
+                requestStream.Write(bytes, 0, bytes.Length);
+            try
+            {
+                using (HttpWebResponse response = httpWebRequest.GetResponse() as HttpWebResponse)
+                {
+                    string sResult = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                    JObject jobj = JObject.Parse(sResult);
+
+                    DataTable dataTable = jobj.ToObject<DataTable>();
+                    dtTolistView(dataTable, listView1);
                 }
             }
             catch (Exception ex)
@@ -119,6 +177,9 @@ namespace WCF_RESTful_Test
             dt.Columns.Add("ProductId");
             dt.Columns.Add("ProductName");
             dt.Columns.Add("ProductCost");
+
+            txtURL.Text = @"http://localhost:12419/ProductService.svc/GetProductObj";
+            txtPostData.Text = SetDataTable();
 
             HttpWebRequest httpWebRequest = WebRequest.Create(new Uri(txtURL.Text)) as HttpWebRequest;
             httpWebRequest.Method = "POST";
@@ -360,7 +421,115 @@ namespace WCF_RESTful_Test
             return theDataSet.Tables[0];
         }
 
+        public DataTable ConvertDataTabletoString(string empno)
+        {
+            DataSet ds = new DataSet();
+
+            DataTable dt = new DataTable();
+
+            string conStr = "Provider = OraOLEDB.Oracle; Data Source = ORCL; User Id = ORAUSER; Password = 1qazxsw2";
+
+            File.WriteAllText(path + @"\Product.TXT", string.Format("[conStr]\r\n{0}\r\n", conStr));
+
+            using (OleDbConnection con = new OleDbConnection(conStr))
+            {
+                con.Open();
+                string query = "";
+                query = query + "SELECT * FROM ORAUSER.EMP ";
+                query = query + "WHERE 1=1 ";
+                query = query + "AND EMPNO = '" + empno + "'";
+                query = query + "";
+
+                File.AppendAllText(path + @"\Product.TXT", string.Format("[query]\r\n{0}\r\n", query));
+
+                using (OleDbCommand command = new OleDbCommand(query, con))
+                using (OleDbDataAdapter adapter = new OleDbDataAdapter(command))
+                {
+                    adapter.Fill(ds);
+                }
+
+                dt = ds.Tables[0];
+
+                List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
+                Dictionary<string, object> row;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    row = new Dictionary<string, object>();
+                    foreach (DataColumn col in dt.Columns)
+                    {
+                        row.Add(col.ColumnName, dr[col]);
+                    }
+                    rows.Add(row);
+                    File.AppendAllText(path + @"\Product.TXT", string.Format("[ROW]\r\n{0}\r\n", row.ToString()));
+
+                }
+
+                return dt;
+
+            }
+        }
+
+        private void SelectEMP(string empno)
+        {
+            //Oracle connectionstring
+            string connectionString =
+                "user id=ORAUSER;password=1qazxsw2;" +
+                "data source=(DESCRIPTION=(ADDRESS=" +
+                "(PROTOCOL=tcp)(HOST=localhost)" +
+                "(PORT=1521))(CONNECT_DATA=" +
+                "(SERVICE_NAME=ORCL)))";
+
+            using (OracleConnection connection = new OracleConnection())
+            {
+                connection.ConnectionString = connectionString;
+
+                try
+                {
+                    connection.Open();
+
+                    string result = "Connection Successful!";
+                    txtResult.Text = result;
+
+                    Console.WriteLine(result);
+                    Console.ReadLine();
+                }
+                catch (OracleException ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    Console.ReadLine();
+                }
+            }
+        }
+
+
+
+        private string TestOracleConnection()
+        {
+
+            string result = IntPtr.Size == 8 ? "[Running as 64-bit]" : "[Running as 32-bit]";
+
+            try
+            {
+                string connString = String.Format("user id={0}; password={1}; data source=(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST={2})(PORT=1521))(CONNECT_DATA=(SERVICE_NAME={3})))"
+                    , m_User, m_Password, m_Host, m_DataSource);
+
+                OracleConnection oradb = new OracleConnection();
+                oradb.ConnectionString = connString;
+                oradb.Open();
+                oradb.Close();
+                result += " Connection succeeded.";
+                txtResult.Text = result;
+            }
+            catch
+            {
+                result += " Connection failed.";
+            }
+
+            return result;
+
+        }
     }
+
 
     public class MyTableUtilClass
     {
@@ -368,7 +537,5 @@ namespace WCF_RESTful_Test
         public string Message { get; set; }
         public DataTable Product { get; set; }
     }
-
-
     
 }

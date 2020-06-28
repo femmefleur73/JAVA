@@ -29,12 +29,29 @@ namespace WCFRESTServiceDemo
         Product GetProduct(string product);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "GetProductObj",
+                   Method = "POST",
+                   BodyStyle = WebMessageBodyStyle.WrappedRequest,
+                   RequestFormat = WebMessageFormat.Json,
+                   ResponseFormat = WebMessageFormat.Json)]
+        MyTableUtilClass GetProductObj(string product);
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "GetProductDT",
                    Method = "POST",
                    BodyStyle = WebMessageBodyStyle.WrappedRequest,
                    RequestFormat = WebMessageFormat.Json,
                    ResponseFormat = WebMessageFormat.Json)]
-        MyTableUtilClass GetProductDT(string product);
+        DataTable GetProductDT(string product);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "GetProductORA",
+                   Method = "POST",
+                   BodyStyle = WebMessageBodyStyle.WrappedRequest,
+                   RequestFormat = WebMessageFormat.Json,
+                   ResponseFormat = WebMessageFormat.Json)]
+        string ConvertDataTabletoString(string empno);
+
     }
 
     public class Product
