@@ -1,4 +1,0 @@
-[conStr]
-Provider=MSDAORA;data source=ORCL;User ID=ORAUSER;Password=1qazxsw2
-[query]
-SELECT * FROM ORAUSER.EMPWHERE 1=1AND EMPNO = '7499';

@@ -1,0 +1,10 @@
+G:\Github\WCF_RESTful\WCFRESTServiceDemo\bin\WCFRESTServiceDemo.dll.config
+G:\Github\WCF_RESTful\WCFRESTServiceDemo\bin\WCFRESTServiceDemo.dll
+G:\Github\WCF_RESTful\WCFRESTServiceDemo\bin\WCFRESTServiceDemo.pdb
+G:\Github\WCF_RESTful\WCFRESTServiceDemo\bin\Newtonsoft.Json.dll
+G:\Github\WCF_RESTful\WCFRESTServiceDemo\bin\Newtonsoft.Json.xml
+G:\Github\WCF_RESTful\WCFRESTServiceDemo\obj\Release\WCFRESTServiceDemo.csprojAssemblyReference.cache
+G:\Github\WCF_RESTful\WCFRESTServiceDemo\obj\Release\WCFRESTServiceDemo.csproj.CoreCompileInputs.cache
+G:\Github\WCF_RESTful\WCFRESTServiceDemo\obj\Release\WCFRESTServiceDemo.csproj.CopyComplete
+G:\Github\WCF_RESTful\WCFRESTServiceDemo\obj\Release\WCFRESTServiceDemo.dll
+G:\Github\WCF_RESTful\WCFRESTServiceDemo\obj\Release\WCFRESTServiceDemo.pdb

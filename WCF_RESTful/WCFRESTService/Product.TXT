@@ -1,0 +1,2 @@
+[conStr]
+Provider=MSDAORA;data source=ORCL;User ID=ORAUSER;Password=1qazxsw2
