@@ -29,19 +29,12 @@ namespace WCFRESTServiceDemo
         Product GetProduct(string product);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "GetProductObj",
-                   Method = "POST",
-                   BodyStyle = WebMessageBodyStyle.WrappedRequest,
-                   RequestFormat = WebMessageFormat.Json,
-                   ResponseFormat = WebMessageFormat.Json)]
-        MyTableUtilClass GetProductObj(string product);
-
-        [OperationContract]
         [WebInvoke(UriTemplate = "GetProductDT",
                    Method = "POST",
                    BodyStyle = WebMessageBodyStyle.WrappedRequest,
                    RequestFormat = WebMessageFormat.Json,
                    ResponseFormat = WebMessageFormat.Json)]
+<<<<<<< HEAD:WCF_RESTful/WCFRESTService/IProductService.cs
         DataTable GetProductDT(string product);
 
         [OperationContract]
@@ -52,6 +45,9 @@ namespace WCFRESTServiceDemo
                    ResponseFormat = WebMessageFormat.Json)]
         string ConvertDataTabletoString(string EMPLOYEE_ID);
 
+=======
+        MyTableUtilClass GetProductDT(string product);
+>>>>>>> parent of d515a4e... oracle:WCF_RESTful/WCFRESTServiceDemo/IProductService.cs
     }
 
     public class Product

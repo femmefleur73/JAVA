@@ -15,16 +15,21 @@ G:\SRC\CSharp\WCF_RESTful_Test_Src\WCF_RESTful_Test\obj\Debug\WCF_RESTful_Test.c
 G:\SRC\CSharp\WCF_RESTful_Test_Src\WCF_RESTful_Test\obj\Debug\WCF_RESTful_Test.csproj.CoreCompileInputs.cache
 G:\SRC\CSharp\WCF_RESTful_Test_Src\WCF_RESTful_Test\obj\Debug\WCF_RESTful_Test.exe
 G:\SRC\CSharp\WCF_RESTful_Test_Src\WCF_RESTful_Test\obj\Debug\WCF_RESTful_Test.pdb
-G:\Github\WCF_RESTful\WCF_RESTful_Test\obj\Debug\WCF_RESTful_Test.frmWCFRESTful.resources
+G:\Github\WCF_RESTful\WCF_RESTful_Test\bin\Debug\WCF_RESTful_Test.exe
+G:\Github\WCF_RESTful\WCF_RESTful_Test\bin\Debug\WCF_RESTful_Test.pdb
 G:\Github\WCF_RESTful\WCF_RESTful_Test\obj\Debug\WCF_RESTful_Test.Properties.Resources.resources
 G:\Github\WCF_RESTful\WCF_RESTful_Test\obj\Debug\WCF_RESTful_Test.csproj.GenerateResource.cache
 G:\Github\WCF_RESTful\WCF_RESTful_Test\obj\Debug\WCF_RESTful_Test.csproj.CoreCompileInputs.cache
-G:\Github\WCF_RESTful\WCF_RESTful_Test\bin\Debug\WCF_RESTful_Test.exe
-G:\Github\WCF_RESTful\WCF_RESTful_Test\bin\Debug\WCF_RESTful_Test.pdb
+G:\Github\WCF_RESTful\WCF_RESTful_Test\obj\Debug\WCF_RESTful_Test.exe
+G:\Github\WCF_RESTful\WCF_RESTful_Test\obj\Debug\WCF_RESTful_Test.pdb
+G:\Github\WCF_RESTful\WCF_RESTful_Test\obj\Debug\WCF_RESTful_Test.frmWCFRESTful.resources
 G:\Github\WCF_RESTful\WCF_RESTful_Test\bin\Debug\Newtonsoft.Json.dll
 G:\Github\WCF_RESTful\WCF_RESTful_Test\bin\Debug\Newtonsoft.Json.xml
 G:\Github\WCF_RESTful\WCF_RESTful_Test\obj\Debug\WCF_RESTful_Test.csproj.CopyComplete
+<<<<<<< HEAD:WCF_RESTful/WCF_RESTful_Client/obj/Debug/WCF_RESTful_Test.csproj.FileListAbsolute.txt
 G:\Github\WCF_RESTful\WCF_RESTful_Test\obj\Debug\WCF_RESTful_Test.exe
 G:\Github\WCF_RESTful\WCF_RESTful_Test\obj\Debug\WCF_RESTful_Test.pdb
 G:\Github\WCF_RESTful\WCF_RESTful_Test\bin\Debug\WCF_RESTful_Test.exe.config
+=======
+>>>>>>> parent of d515a4e... oracle:WCF_RESTful/WCF_RESTful_Test/obj/Debug/WCF_RESTful_Test.csproj.FileListAbsolute.txt
 G:\Github\WCF_RESTful\WCF_RESTful_Test\obj\Debug\WCF_RESTful_Test.csprojAssemblyReference.cache

@@ -45,10 +45,13 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+<<<<<<< HEAD:WCF_RESTful/WCFRESTService/WCFRESTService.csproj
     <Reference Include="Oracle.DataAccess, Version=2.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\app\Administrator\product\12.1.0\dbhome_1\ODP.NET\bin\4\Oracle.DataAccess.dll</HintPath>
     </Reference>
+=======
+>>>>>>> parent of d515a4e... oracle:WCF_RESTful/WCFRESTServiceDemo/WCFRESTServiceDemo.csproj
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />

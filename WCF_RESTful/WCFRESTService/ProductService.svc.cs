@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+<<<<<<< HEAD:WCF_RESTful/WCFRESTService/ProductService.svc.cs
 using Newtonsoft.Json.Serialization;
 using Oracle.DataAccess.Client;
+=======
+>>>>>>> parent of d515a4e... oracle:WCF_RESTful/WCFRESTServiceDemo/ProductService.svc.cs
 
 namespace WCFRESTServiceDemo
 {
@@ -16,6 +17,7 @@ namespace WCFRESTServiceDemo
     // 참고: 이 서비스를 테스트하기 위해 WCF 테스트 클라이언트를 시작하려면 솔루션 탐색기에서Service1.svc나 Service1.svc.cs를 선택하고 디버깅을 시작하십시오.
     public class ProductService : IProductService
     {
+<<<<<<< HEAD:WCF_RESTful/WCFRESTService/ProductService.svc.cs
         //private static string path = AppDomain.CurrentDomain.BaseDirectory;
         private static string sDirPath = @"C:\LOG";
         private static string file = sDirPath + @"\ServerLog_" + DateTime.Now.ToString("yyyyMMdd") + ".TXT";
@@ -29,6 +31,9 @@ namespace WCFRESTServiceDemo
             }
         }
 
+=======
+        private static string path = AppDomain.CurrentDomain.BaseDirectory;
+>>>>>>> parent of d515a4e... oracle:WCF_RESTful/WCFRESTServiceDemo/ProductService.svc.cs
         public List<Product> GetProductDetails(string productId)
         {
             File.WriteAllText(file, string.Format("[전송파라미터]: {0}\r\n", productId));
@@ -73,7 +78,7 @@ namespace WCFRESTServiceDemo
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
-        public MyTableUtilClass GetProductObj(string product)
+        public MyTableUtilClass GetProductDT(string product)
         {
             //DataSet ds = new DataSet();
             DataTable dtOut = new DataTable();
@@ -98,7 +103,7 @@ namespace WCFRESTServiceDemo
             {
                 DataRow newRow = dtOut.NewRow();
                 newRow["ProductId"] = i.ToString();
-                newRow["ProductName"] = "OBJECT item" + i;
+                newRow["ProductName"] = "SAM item" + i;
                 newRow["ProductCost"] = (20000 * i).ToString();
                 dtOut.Rows.Add(newRow);
             }
@@ -114,6 +119,7 @@ namespace WCFRESTServiceDemo
 
             return pd;
         }
+<<<<<<< HEAD:WCF_RESTful/WCFRESTService/ProductService.svc.cs
 
         /// <summary>
         /// DataTable Data 처리 테스트
@@ -234,5 +240,7 @@ namespace WCFRESTServiceDemo
             }
         }
 
+=======
+>>>>>>> parent of d515a4e... oracle:WCF_RESTful/WCFRESTServiceDemo/ProductService.svc.cs
     }
 }
