@@ -1,0 +1,2 @@
+[conStr]
+Provider = OraOLEDB.Oracle; Data Source = ORCL; User Id = ORAUSER; Password = 1qazxsw2

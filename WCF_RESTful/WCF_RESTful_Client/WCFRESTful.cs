@@ -12,14 +12,18 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+using System.Data.OleDb;
+using Oracle.DataAccess.Client;
+
 namespace WCF_RESTful_Test
 {
     public partial class frmWCFRESTful : Form
     {
-        private static string sUrl = @"http://localhost/WCFRESTService/ProductService.svc/GetProduct";
+        private static string sUrl = @"http://localhost/WCFRESTService/ProductService.svc";
         //private static string sInput = "{\"productId\" : \"1\"}";
         private static string sInput = @"{""product"" : ""{\""ProductCost\"":\""1000 $\"",\""ProductId\"":\""1\"",\""ProductName\"":\""Laptop\""}""}";
         private static string path = AppDomain.CurrentDomain.BaseDirectory;
+        private static string m_User = "ORAUSER", m_Password = "1qazxsw2", m_Host = "localhost", m_DataSource = "ORCL";
 
         public frmWCFRESTful()
         {
@@ -29,9 +33,9 @@ namespace WCF_RESTful_Test
         private void btnSend_Click(object sender, EventArgs e)
         {
             //SendString();
-            SendObject();
+            //SendObject();
             //SendDataTable();
-<<<<<<< HEAD:WCF_RESTful/WCF_RESTful_Client/WCFRESTful.cs
+            
             SendOracle();
 
 
@@ -43,8 +47,6 @@ namespace WCF_RESTful_Test
             //listView1.Clear();
             //SetListView("DataTable", dt);
             //dtTolistView(dt, listView1);
-=======
->>>>>>> parent of d515a4e... oracle:WCF_RESTful/WCF_RESTful_Test/WCFRESTful.cs
         }
 
 
@@ -55,12 +57,9 @@ namespace WCF_RESTful_Test
             dt.Columns.Add("ProductName");
             dt.Columns.Add("ProductCost");
 
-<<<<<<< HEAD:WCF_RESTful/WCF_RESTful_Client/WCFRESTful.cs
-            txtURL.Text = @"http://localhost/WCFRESTService/ProductService.svc/GetProduct";
+            txtURL.Text = sUrl + @"/GetProduct";
             txtPostData.Text = sInput;
 
-=======
->>>>>>> parent of d515a4e... oracle:WCF_RESTful/WCF_RESTful_Test/WCFRESTful.cs
             HttpWebRequest httpWebRequest = WebRequest.Create(new Uri(txtURL.Text)) as HttpWebRequest;
             httpWebRequest.Method = "POST";
             httpWebRequest.ContentType = "application/json; charset=utf-8";
@@ -108,12 +107,9 @@ namespace WCF_RESTful_Test
             dt.Columns.Add("ProductName");
             dt.Columns.Add("ProductCost");
 
-<<<<<<< HEAD:WCF_RESTful/WCF_RESTful_Client/WCFRESTful.cs
-            txtURL.Text = @"http://localhost/WCFRESTService/ProductService.svc/GetProductDT";
+            txtURL.Text = sUrl + @"/GetProductDT";
             txtPostData.Text = SetDataTable();
 
-=======
->>>>>>> parent of d515a4e... oracle:WCF_RESTful/WCF_RESTful_Test/WCFRESTful.cs
             HttpWebRequest httpWebRequest = WebRequest.Create(new Uri(txtURL.Text)) as HttpWebRequest;
             httpWebRequest.Method = "POST";
             httpWebRequest.ContentType = "application/json; charset=utf-8";
@@ -126,7 +122,6 @@ namespace WCF_RESTful_Test
                 using (HttpWebResponse response = httpWebRequest.GetResponse() as HttpWebResponse)
                 {
                     string sResult = new StreamReader(response.GetResponseStream()).ReadToEnd();
-<<<<<<< HEAD:WCF_RESTful/WCF_RESTful_Client/WCFRESTful.cs
                     JObject jobj = JObject.Parse(sResult);
 
                     DataTable dataTable = jobj.ToObject<DataTable>();
@@ -143,7 +138,7 @@ namespace WCF_RESTful_Test
         {
             DataTable dt = new DataTable();
 
-            txtURL.Text = @"http://localhost/WCFRESTService/ProductService.svc/GetProductORA";
+            txtURL.Text = sUrl + @"/GetProductORA";
             txtPostData.Text = @"{""EMPLOYEE_ID"" : ""160""}";
 
             HttpWebRequest httpWebRequest = WebRequest.Create(new Uri(txtURL.Text)) as HttpWebRequest;
@@ -181,13 +176,12 @@ namespace WCF_RESTful_Test
                     listView1.Clear();
                     SetListView("DataTable", dt);
                     dtTolistView(dt, listView1);
-=======
-                    var jsonLinq = JObject.Parse(sResult);
-                    string jLinq = jsonLinq["Product"].ToString();
-                    DataTable myTable = null;
-                    myTable = XMLtoDT(jLinq);
-                    dtTolistView(myTable, listView1);
->>>>>>> parent of d515a4e... oracle:WCF_RESTful/WCF_RESTful_Test/WCFRESTful.cs
+
+                    //var jsonLinq = JObject.Parse(sResult);
+                    //string jLinq = jsonLinq["Product"].ToString();
+                    //DataTable myTable = null;
+                    //myTable = XMLtoDT(jLinq);
+                    //dtTolistView(myTable, listView1);
                 }
             }
             catch (Exception ex)
@@ -203,12 +197,9 @@ namespace WCF_RESTful_Test
             dt.Columns.Add("ProductName");
             dt.Columns.Add("ProductCost");
 
-<<<<<<< HEAD:WCF_RESTful/WCF_RESTful_Client/WCFRESTful.cs
-            txtURL.Text = @"http://localhost/WCFRESTService/ProductService.svc/GetProductObj";
+            txtURL.Text = sUrl + @"/GetProductOBJ";
             txtPostData.Text = SetDataTable();
 
-=======
->>>>>>> parent of d515a4e... oracle:WCF_RESTful/WCF_RESTful_Test/WCFRESTful.cs
             HttpWebRequest httpWebRequest = WebRequest.Create(new Uri(txtURL.Text)) as HttpWebRequest;
             httpWebRequest.Method = "POST";
             httpWebRequest.ContentType = "application/json; charset=utf-8";
@@ -292,10 +283,6 @@ namespace WCF_RESTful_Test
                     break;
 
             }
-            
-
-            
-            
 
             /* 
             // String[] aa = {"aa1", "aa2"}; 와 같이 일부 항목만 입력해도 ListView 에 표시되지만, 
@@ -307,8 +294,6 @@ namespace WCF_RESTful_Test
             //listView1.Items.Add(newitem); 
             //newitem = new ListViewItem(new String[] { "bb1", "bb2", "bb3", ""}); 
             //listView1.Items.Add(newitem);
-
-
         }
 
         /// <summary>
@@ -468,7 +453,6 @@ namespace WCF_RESTful_Test
             return theDataSet.Tables[0];
         }
 
-<<<<<<< HEAD:WCF_RESTful/WCF_RESTful_Client/WCFRESTful.cs
         public DataTable ConvertDataTabletoString(string empno)
         {
             DataSet ds = new DataSet();
@@ -508,7 +492,7 @@ namespace WCF_RESTful_Test
                         row.Add(col.ColumnName, dr[col]);
                     }
                     rows.Add(row);
-                    File.AppendAllText(path + @"\Product.TXT", string.Format("[ROW]\r\n{0}\r\n", row.ToString()));
+                    File.AppendAllText(path + @"\Product.TXT", string.Format("[ROW]\r\n{0}\r\n", JsonConvert.SerializeObject(rows), Formatting.Indented));
 
                 }
 
@@ -558,8 +542,7 @@ namespace WCF_RESTful_Test
 
             try
             {
-                string connString = String.Format("user id={0}; password={1}; data source=(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST={2})(PORT=1521))(CONNECT_DATA=(SERVICE_NAME={3})))"
-                    , m_User, m_Password, m_Host, m_DataSource);
+                string connString = String.Format("user id={0}; password={1}; data source=(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST={2})(PORT=1521))(CONNECT_DATA=(SERVICE_NAME={3})))", m_User, m_Password, m_Host, m_DataSource);
 
                 OracleConnection oradb = new OracleConnection();
                 oradb.ConnectionString = connString;
@@ -576,8 +559,6 @@ namespace WCF_RESTful_Test
             return result;
 
         }
-=======
->>>>>>> parent of d515a4e... oracle:WCF_RESTful/WCF_RESTful_Test/WCFRESTful.cs
     }
 
     public class MyTableUtilClass
