@@ -1,0 +1,46 @@
+<<<<<<< HEAD:WCF_RESTful/WCFRESTService/Product.TXT
+[conStr]
+Provider=MSDAORA;data source=ORCL;User ID=ORAUSER;Password=1qazxsw2
+=======
+[GetProductDT::전송파라미터]: {
+  "Product": [
+    {
+      "ProductId": "0",
+      "ProductName": "Kor item0",
+      "ProductCost": "0"
+    },
+    {
+      "ProductId": "1",
+      "ProductName": "Kor item1",
+      "ProductCost": "10000"
+    },
+    {
+      "ProductId": "2",
+      "ProductName": "Kor item2",
+      "ProductCost": "20000"
+    },
+    {
+      "ProductId": "3",
+      "ProductName": "Kor item3",
+      "ProductCost": "30000"
+    },
+    {
+      "ProductId": "4",
+      "ProductName": "Kor item4",
+      "ProductCost": "40000"
+    }
+  ]
+}
+[DataTable In Data]
+Product Id : 0, ProductName :Kor item0, ProductCost :0
+[DataTable In Data]
+Product Id : 1, ProductName :Kor item1, ProductCost :10000
+[DataTable In Data]
+Product Id : 2, ProductName :Kor item2, ProductCost :20000
+[DataTable In Data]
+Product Id : 3, ProductName :Kor item3, ProductCost :30000
+[DataTable In Data]
+Product Id : 4, ProductName :Kor item4, ProductCost :40000
+[Product Out Data]
+Product Id : System.Data.DataRow, ProductName :System.Data.DataRow, ProductCost :System.Data.DataRow
+>>>>>>> parent of d515a4e... oracle:WCF_RESTful/WCFRESTServiceDemo/Product.TXT
