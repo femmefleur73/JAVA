@@ -7,7 +7,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 
-namespace WCFRESTServiceDemo
+namespace WCFRESTService
 {
     [ServiceContract]
     public interface IProductService
@@ -34,7 +34,6 @@ namespace WCFRESTServiceDemo
                    BodyStyle = WebMessageBodyStyle.WrappedRequest,
                    RequestFormat = WebMessageFormat.Json,
                    ResponseFormat = WebMessageFormat.Json)]
-<<<<<<< HEAD:WCF_RESTful/WCFRESTService/IProductService.cs
         DataTable GetProductDT(string product);
 
         [OperationContract]
@@ -45,9 +44,14 @@ namespace WCFRESTServiceDemo
                    ResponseFormat = WebMessageFormat.Json)]
         string ConvertDataTabletoString(string EMPLOYEE_ID);
 
-=======
-        MyTableUtilClass GetProductDT(string product);
->>>>>>> parent of d515a4e... oracle:WCF_RESTful/WCFRESTServiceDemo/IProductService.cs
+        [OperationContract]
+        [WebInvoke(UriTemplate = "GetProductOBJ",
+                   Method = "POST",
+                   BodyStyle = WebMessageBodyStyle.WrappedRequest,
+                   RequestFormat = WebMessageFormat.Json,
+                   ResponseFormat = WebMessageFormat.Json)]
+        MyTableUtilClass GetProductOBJ(string product);
+
     }
 
     public class Product

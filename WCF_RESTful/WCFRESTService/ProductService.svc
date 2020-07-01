@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="WCFRESTServiceDemo.ProductService" CodeBehind="ProductService.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="WCFRESTService.ProductService" CodeBehind="ProductService.svc.cs" %>
